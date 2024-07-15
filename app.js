@@ -19,6 +19,19 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
 })
 
+app.get('/api/check-date', (req, res) => {
+    // 1. Cargar el JSON
+    const lottery = require('./data/lottery.json');
+
+    // 2. Obtener la fecha a comprobar de la query string
+    const { date } = req.params;
+
+    // 3. Buscar en el array lottery 
+
+    // 4. Responder al cliente con un JSON con el formato adecuado
+    res.send({});
+});
+
 // Levantar el servidor
 app.listen(3000, () => {
     console.log("Servidor corriendo en el puerto 3000.");

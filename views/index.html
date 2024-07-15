@@ -43,12 +43,19 @@
             e.preventDefault();
             const date = document.getElementById('date').value;
             // TODO: Realizar llamada al servidor
+
+            const response = await fetch('/api/check-date?date=' + date);
+
+            const data = await response.json();
+            console.log("🚀 ~ file: index.html:50 ~ document.querySelector ~ data:", data)
+
+
         });
 
-        document.querySelector('#checkYourNumberForm').addEventListener('submit', (e) => {
+        document.querySelector('#checkYourNumberForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const date = document.getElementById('yourDate').value;
-            const yourNumbers = document.getElementById('yourNumbers').value.split(' ');
+            const yourNumbers = document.getElementById('yourNumbers').value;
             // TODO: Realizar llamada al servidor
         });
     </script>
