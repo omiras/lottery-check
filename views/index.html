@@ -21,7 +21,8 @@
                 <input type="date" id="date" name="date" required>
                 <button type="submit">Comprobar</button>
             </form>
-            <div id="numbersResult" class="result"></div>
+            <label for="numbersResult">Números premiados:</label>
+            <input type="text" id="numbersResult" readonly></div>
         </section>
 
         <section class="section">
@@ -34,7 +35,8 @@
                     required pattern="\d+(\s\d+){0,6}">
                 <button type="submit">Comprobar</button>
             </form>
-            <div id="yourNumberResult" class="result"></div>
+            <label for="yourNumbersResult">Cantidad de aciertos y premio obtenido:</label>
+            <input type="text" id="yourNumbersResult" readonly></div>
         </section>
     </main>
 
@@ -47,7 +49,16 @@
             const response = await fetch('/api/check-date?date=' + date);
 
             const data = await response.json();
-            console.log("🚀 ~ file: index.html:50 ~ document.querySelector ~ data:", data)
+            console.log("🚀 ~ file: index.html:50 ~ document.querySelector ~ data:", data);
+
+            if (response.ok) {
+
+                document.querySelector('#numbersResult').value = data.winningNumbers;
+            } else {
+                document.querySelector('#numbersResult').value = data.message
+
+            }
+
 
 
         });

@@ -24,12 +24,25 @@ app.get('/api/check-date', (req, res) => {
     const lottery = require('./data/lottery.json');
 
     // 2. Obtener la fecha a comprobar de la query string
-    const { date } = req.params;
+    const { date } = req.query;
+    console.log("🚀 ~ file: app.js:28 ~ app.get ~ date:", date)
 
     // 3. Buscar en el array lottery 
+    const item = lottery.find(n => n.draw_date.includes(date));
 
-    // 4. Responder al cliente con un JSON con el formato adecuado
-    res.send({});
+    if (item) {
+
+        // 4. Responder al cliente con un JSON con el formato adecuado
+        res.send({
+            message: "Draw found",
+            winningNumbers: item.winning_numbers
+        });
+    } else {
+        return res.status(404).send({
+            message: "No draw found for given date",
+            winningNumbers: ""
+        })
+    }
 });
 
 // Levantar el servidor

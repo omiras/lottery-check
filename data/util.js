@@ -7,7 +7,7 @@ const url = 'https://data.ny.gov/api/views/5xaw-6ayf/rows.json?accessType=DOWNLO
 // Función para convertir cada elemento del array data
 function convertData(data) {
     return data.map(item => ({
-        draw_date: item[8],
+        draw_date: formatSpanishDate(item[8]),
         winning_numbers: item[9],
         supplemental_numbers: item[10],
         super_ball: item[11],
@@ -16,6 +16,15 @@ function convertData(data) {
         jackpot: item[14],
         next_jackpot: item[15]
     }));
+}
+
+// Función para convertir fechas al formato español (día/mes/año)
+function formatSpanishDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Los meses comienzan desde 0
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
 // Realiza la solicitud HTTPS
@@ -31,7 +40,7 @@ https.get(url, res => {
     res.on('end', () => {
         const json = JSON.parse(data);
         const convertedData = convertData(json.data);
-
+        
         // Guarda el resultado en un archivo JSON
         fs.writeFile('converted_data.json', JSON.stringify(convertedData, null, 2), err => {
             if (err) throw err;
