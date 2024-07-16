@@ -68,6 +68,19 @@
             const date = document.getElementById('yourDate').value;
             const yourNumbers = document.getElementById('yourNumbers').value;
             // TODO: Realizar llamada al servidor
+
+            const response = await fetch(`/api/get-computed-results?date=${date}&playedNumbers=${yourNumbers}`);
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                document.querySelector('#yourNumbersResult').value = `Has acertado ${data.matchedNumbers} números. Su premio es de : ${data.prize} $`;
+            } else {
+                document.querySelector('#yourNumbersResult').value = data.message
+
+            }
+
         });
     </script>
 </body>
